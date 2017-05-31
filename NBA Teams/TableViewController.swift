@@ -23,8 +23,23 @@ class TableViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
+        // workaround to remove extra padding on the top of tableView section header
+        self.automaticallyAdjustsScrollViewInsets = false
+        
+        // add edit button as Navigation Bar Item
+        navigationItem.rightBarButtonItem = editButtonItem
     }
 
+    
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        
+        if editing {
+            tableView.setEditing(true, animated: true)
+        } else {
+            tableView.setEditing(false, animated: true)
+        }
+    }
 
 }
 
@@ -48,10 +63,29 @@ extension TableViewController: UITableViewDataSource {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+        case 0:
+            return "Eastern Conference"
+        case 1:
+            return "Western Conference"
+        default:
+            return "Please fix me!!"
+        }
+    }
+    
 }
 
 // MARK: - TableView Delegate
 extension TableViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            allNBATeamConference[indexPath.section].remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
+    
     
 }
 
