@@ -7,21 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		376F18A71EDF372700F70168 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376F18A61EDF372700F70168 /* TableViewController.swift */; };
 		37A345391EDF1FF30040259B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A345381EDF1FF30040259B /* AppDelegate.swift */; };
-		37A3453B1EDF1FF30040259B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A3453A1EDF1FF30040259B /* ViewController.swift */; };
 		37A3453E1EDF1FF30040259B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37A3453C1EDF1FF30040259B /* Main.storyboard */; };
 		37A345401EDF1FF30040259B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 37A3453F1EDF1FF30040259B /* Assets.xcassets */; };
 		37A345431EDF1FF30040259B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37A345411EDF1FF30040259B /* LaunchScreen.storyboard */; };
+		37A3454B1EDF201A0040259B /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A3454A1EDF20190040259B /* Team.swift */; };
+		37A3454D1EDF210A0040259B /* TeamData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A3454C1EDF210A0040259B /* TeamData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		376F18A61EDF372700F70168 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		37A345351EDF1FF30040259B /* NBA Teams.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "NBA Teams.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		37A345381EDF1FF30040259B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		37A3453A1EDF1FF30040259B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		37A3453D1EDF1FF30040259B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		37A3453F1EDF1FF30040259B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		37A345421EDF1FF30040259B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		37A345441EDF1FF30040259B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		37A3454A1EDF20190040259B /* Team.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
+		37A3454C1EDF210A0040259B /* TeamData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,7 +59,9 @@
 			isa = PBXGroup;
 			children = (
 				37A345381EDF1FF30040259B /* AppDelegate.swift */,
-				37A3453A1EDF1FF30040259B /* ViewController.swift */,
+				376F18A61EDF372700F70168 /* TableViewController.swift */,
+				37A3454C1EDF210A0040259B /* TeamData.swift */,
+				37A3454A1EDF20190040259B /* Team.swift */,
 				37A3453C1EDF1FF30040259B /* Main.storyboard */,
 				37A3453F1EDF1FF30040259B /* Assets.xcassets */,
 				37A345411EDF1FF30040259B /* LaunchScreen.storyboard */,
@@ -137,7 +143,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				37A3453B1EDF1FF30040259B /* ViewController.swift in Sources */,
+				37A3454B1EDF201A0040259B /* Team.swift in Sources */,
+				37A3454D1EDF210A0040259B /* TeamData.swift in Sources */,
+				376F18A71EDF372700F70168 /* TableViewController.swift in Sources */,
 				37A345391EDF1FF30040259B /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -304,6 +312,7 @@
 				37A345491EDF1FF30040259B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
