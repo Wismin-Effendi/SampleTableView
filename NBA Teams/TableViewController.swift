@@ -28,15 +28,34 @@ class TableViewController: UIViewController {
         
         // add edit button as Navigation Bar Item
         navigationItem.rightBarButtonItem = editButtonItem
+        
+        tableView.allowsSelectionDuringEditing = true
     }
 
     
+    // create temp new row to show "Add New Team" on each section
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         
         if editing {
+            tableView.beginUpdates()
+            
+            for (index, sectionItems) in allNBATeamConference.enumerated() {
+                let indexPath = IndexPath(row: sectionItems.count, section: index)
+                tableView.insertRows(at: [indexPath], with: .fade)
+            }
+            
+            tableView.endUpdates()
             tableView.setEditing(true, animated: true)
         } else {
+            tableView.beginUpdates()
+            
+            for (index, sectionItems) in allNBATeamConference.enumerated() {
+                let indexPath = IndexPath(row: sectionItems.count, section: index)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+            
+            tableView.endUpdates()
             tableView.setEditing(false, animated: true)
         }
     }
@@ -50,27 +69,39 @@ extension TableViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return allNBATeamConference[section].count
+        let addedRow = isEditing ? 1 : 0
+        
+        return allNBATeamConference[section].count + addedRow
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        let item = allNBATeamConference[indexPath.section][indexPath.row]
         
-        cell.textLabel?.text = item.name
-        cell.detailTextLabel?.text = item.location
+        if indexPath.row >= allNBATeamConference[indexPath.section].count && isEditing {
+            cell.textLabel?.text = "Add New Team"
+            cell.detailTextLabel?.text = nil
+            cell.imageView?.image = nil
+        } else {
+            let item = allNBATeamConference[indexPath.section][indexPath.row]
+            
+            cell.textLabel?.text = item.name
+            cell.detailTextLabel?.text = item.location
+        }
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch section {
-        case 0:
+        guard let conference = Team.Conference(rawValue: section) else {
+            print("Invalid section number \(section) to generate a valid conference")
+            return "Invalid conference"
+        }
+        
+        switch conference {
+        case .eastern:
             return "Eastern Conference"
-        case 1:
+        case .western:
             return "Western Conference"
-        default:
-            return "Please fix me!!"
         }
     }
     
@@ -81,11 +112,61 @@ extension TableViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
+            
             allNBATeamConference[indexPath.section].remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
+        
+        } else if editingStyle == .insert {
+            let section = indexPath.section
+            
+            guard let conference = Team.Conference(rawValue: section) else {
+                print("Invalid section number \(section) to generate a valid conference")
+                return
+            }
+            
+            var newTeamName = "Please set my team name!"
+            var newLocation = "Please set my location!"
+            
+            switch conference {
+            case .eastern:
+                newTeamName = "New team in Eastern Conference"
+                newLocation = "somewhere in East Coast"
+            case .western:
+                newTeamName = "New team in Western Conference"
+                newLocation = "somewhere in West Coast"
+            }
+            
+            let newTeam = Team(name: newTeamName, location: newLocation, conference: conference)
+            allNBATeamConference[indexPath.section].append(newTeam)
+            tableView.insertRows(at: [indexPath], with: .fade)
         }
     }
     
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+        let sectionItems = allNBATeamConference[indexPath.section]
+        if indexPath.row >= sectionItems.count {
+            return .insert
+        } else {
+            return .delete
+        }
+    }
+
+    // only allow row selection if it is the 'Add New Team' row
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        let sectionItems = allNBATeamConference[indexPath.section]
+        if isEditing && indexPath.row < sectionItems.count {
+            return nil
+        }
+        return indexPath
+    }
     
+    // behaviour when the user tap the row 
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let sectionItems = allNBATeamConference[indexPath.section]
+        if indexPath.row >= sectionItems.count && isEditing {
+            self.tableView(tableView, commit: .insert, forRowAt: indexPath)
+        }
+    }
 }
 

@@ -10,9 +10,9 @@ import Foundation
 
 struct Team {
     
-    enum Conference {
-        case eastern
-        case western
+    enum Conference: Int {
+        case eastern = 0
+        case western = 1
     }
     
     let name: String
