@@ -168,5 +168,42 @@ extension TableViewController: UITableViewDelegate {
             self.tableView(tableView, commit: .insert, forRowAt: indexPath)
         }
     }
+    
+    // MARK: - for moving rows
+    
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        let sectionItems = allNBATeamConference[indexPath.section]
+        if indexPath.row >= sectionItems.count && isEditing {
+            return false
+        }
+        return true
+    }
+    
+
+    
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let itemToMove = allNBATeamConference[sourceIndexPath.section][sourceIndexPath.row]
+        
+        allNBATeamConference[sourceIndexPath.section].remove(at: sourceIndexPath.row)
+        
+        if sourceIndexPath.section == destinationIndexPath.section {
+            // same section
+            allNBATeamConference[sourceIndexPath.section].insert(itemToMove, at: destinationIndexPath.row)
+        } else {
+            allNBATeamConference[destinationIndexPath.section].insert(itemToMove, at: destinationIndexPath.row)
+        }
+    }
+    
+    // rules that prohibit move row to certain location 
+    // in this case below 'Add New Team'
+    func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
+        let sectionItems = allNBATeamConference[proposedDestinationIndexPath.section]
+        
+        // not allowing move below 'Add New Team row'
+        if proposedDestinationIndexPath.row >= sectionItems.count  {
+            return IndexPath(row: sectionItems.count - 1, section: proposedDestinationIndexPath.section)
+        }
+        return proposedDestinationIndexPath
+    }
 }
 
