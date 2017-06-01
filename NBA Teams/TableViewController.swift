@@ -195,7 +195,7 @@ extension TableViewController: UITableViewDelegate {
     }
     
     // rules that prohibit move row to certain location 
-    // in this case below 'Add New Team'
+    // in this case below 'Add New Team' in prohibited
     func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
         let sectionItems = allNBATeamConference[proposedDestinationIndexPath.section]
         
